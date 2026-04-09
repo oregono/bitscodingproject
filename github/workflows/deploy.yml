@@ -1,0 +1,22 @@
+name: Deploy to Namecheap via FTP
+
+on:
+  push:
+    branches:
+      - work  # or your branch name (like 'work')
+
+jobs:
+  ftp-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4
+        with:
+          server: bitscoding.online    # <-- replace with your FTP host
+          username: bitscoding.online  # <-- replace with your FTP username
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./                # deploy entire repo
+          server-dir: /public_html/    # target folder on server
